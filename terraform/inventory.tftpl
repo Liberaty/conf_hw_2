@@ -1,7 +1,7 @@
 ---
-clickhouse:
+sonarqube:
   hosts:
-%{~ for i in clickhouse_hosts ~}
+%{~ for i in sonarqube_hosts ~}
 
     ${i.name}:
       ansible_host: ${i.network_interface[0].nat_ip_address == "" ? i.network_interface[0].ip_address : i.network_interface[0].nat_ip_address}
@@ -12,9 +12,9 @@ clickhouse:
 
 %{~ endfor ~}
 
-vector:
+postgres:
   hosts:
-%{~ for i in vector_hosts ~}
+%{~ for i in postgres_hosts ~}
 
     ${i.name}:
       ansible_host: ${i.network_interface[0].nat_ip_address == "" ? i.network_interface[0].ip_address : i.network_interface[0].nat_ip_address}
@@ -25,9 +25,9 @@ vector:
 
 %{~ endfor ~}
 
-lighthouse:
+nexus:
   hosts:
-%{~ for i in lighthouse_hosts ~}
+%{~ for i in nexus_hosts ~}
 
     ${i.name}:
       ansible_host: ${i.network_interface[0].nat_ip_address == "" ? i.network_interface[0].ip_address : i.network_interface[0].nat_ip_address}

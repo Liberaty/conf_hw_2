@@ -2,16 +2,16 @@ locals {
   centos_instances = yandex_compute_instance.centos
 
   # Разделяем хосты по группам
-  clickhouse_hosts = [local.centos_instances[0]] # Первый хост
-  vector_hosts     = [local.centos_instances[1]] # Второй хост
-  lighthouse_hosts = [local.centos_instances[2]] # Третий хост
+  sonarqube = [local.centos_instances[0]] # Первый хост
+  postgres = [local.centos_instances[1]] # Второй хост
+  nexus = [local.centos_instances[2]] # Третий хост
 }
 
 resource "local_file" "ansible_inventory" {
   content = templatefile("${path.module}/inventory.tftpl", {
-    clickhouse_hosts = local.clickhouse_hosts
-    vector_hosts     = local.vector_hosts
-    lighthouse_hosts = local.lighthouse_hosts
+    sonarqube = local.sonarqube
+    postgres = local.postgres
+    nexus = local.nexus
   })
 
   filename = "${path.module}/infrastructure/inventory/cicd/hosts.yml"
